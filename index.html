@@ -12,17 +12,15 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
 
         /* ---------------------------------------------------- */
-        /* THEME COLOR DEFINITIONS                              */
+        /* THEME DEFINITIONS                                    */
         /* ---------------------------------------------------- */
         :root {
-            /* Compact / Normal Heights */
             --cell-py: 13px;
             --cell-px: 16px;
             --font-size: 13.5px;
             --thumb-size: 34px;
             --row-height: 48px;
 
-            /* Accent Colors */
             --primary: #10b981;
             --primary-hover: #059669;
             --danger: #ef4444;
@@ -92,7 +90,7 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Background Light Mesh / Glow Orbs */
+        /* Ambient Glow Spheres */
         .ambient-shape {
             position: fixed;
             border-radius: 50%;
@@ -119,7 +117,7 @@
         }
 
         /* ---------------------------------------------------- */
-        /* TOP APP HEADER + SEARCH BAR                          */
+        /* HEADER + INTEGRATED SEARCH                           */
         /* ---------------------------------------------------- */
         .app-header {
             position: relative;
@@ -166,7 +164,6 @@
             font-weight: 600;
         }
 
-        /* Search Bar right of Title in Header */
         .header-search {
             position: relative;
             flex: 1;
@@ -199,7 +196,6 @@
 
         .header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 
-        /* Buttons */
         .btn-ui {
             background: var(--control-bg);
             backdrop-filter: blur(12px);
@@ -243,7 +239,7 @@
         .stats-ribbon {
             position: relative;
             z-index: 5;
-            padding: 14px 24px 8px 24px;
+            padding: 14px 24px 10px 24px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
             gap: 14px;
@@ -269,13 +265,13 @@
         .stat-val { font-size: 22px; font-weight: 800; color: var(--text-main); }
 
         /* ---------------------------------------------------- */
-        /* DATA GRID CANVAS + SCROLL CONTAINER                  */
+        /* GLASS DATA TABLE CANVAS                              */
         /* ---------------------------------------------------- */
         .table-wrap {
             position: relative;
             z-index: 5;
             flex: 1;
-            margin: 6px 24px 12px 24px;
+            margin: 4px 24px 14px 24px;
             border-radius: 16px;
             background: var(--glass-card);
             backdrop-filter: blur(28px);
@@ -375,30 +371,8 @@
         .row-btn-delete { color: #f87171; }
         .row-btn-delete:hover { background: rgba(248, 113, 113, 0.2); }
 
-        .add-row-strip {
-            padding: 12px 24px;
-            color: #10b981;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            border-bottom: 1px solid var(--glass-border-subtle);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--control-bg);
-            transition: background 0.15s;
-        }
-        .add-row-strip:hover { background: rgba(16, 185, 129, 0.14); }
-
-        tr.summary-row td {
-            background: var(--glass-th);
-            font-weight: 700;
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
         /* ---------------------------------------------------- */
-        /* FOOTER & FLOATING DOCK (BOTTOM RIGHT CONTROLS)       */
+        /* FOOTER & DOCK (BOTTOM RIGHT)                         */
         /* ---------------------------------------------------- */
         .app-footer {
             position: relative;
@@ -415,7 +389,6 @@
             color: var(--text-muted);
         }
 
-        /* Dock on the bottom right holding Theme and Density */
         .footer-controls-dock {
             display: flex;
             align-items: center;
@@ -454,7 +427,7 @@
         }
 
         /* ---------------------------------------------------- */
-        /* MODALS & SLIDE-OVER DRAWER                           */
+        /* MODALS & DRAWER                                      */
         /* ---------------------------------------------------- */
         .modal-overlay {
             position: fixed;
@@ -633,7 +606,7 @@
     <div class="ambient-shape shape-3"></div>
     <div class="ambient-shape shape-4"></div>
 
-    <!-- Header with Search inside -->
+    <!-- Header with Integrated Search -->
     <header class="app-header">
         <div class="header-left">
             <div class="sheet-icon">田</div>
@@ -642,7 +615,7 @@
             </div>
         </div>
 
-        <!-- Search Bar placed right of Title -->
+        <!-- Search Bar beside Title -->
         <div class="header-search">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             <input type="text" id="searchInput" placeholder="Search across all fields..." oninput="renderTable()">
@@ -677,7 +650,7 @@
         </div>
     </div>
 
-    <!-- Main Glass Table Canvas -->
+    <!-- Main Glass Table Canvas (Bottom Summary & Add Strip Removed) -->
     <div class="table-wrap" id="tableWrap">
         <table class="sheet-table">
             <thead>
@@ -704,18 +677,10 @@
             <tbody id="dataTableBody">
                 <tr><td colspan="17" style="text-align:center; padding: 40px; color: var(--text-muted);">Loading live data...</td></tr>
             </tbody>
-            <tfoot>
-                <tr class="summary-row">
-                    <td class="col-check">Σ</td>
-                    <td class="col-num">SUM</td>
-                    <td colspan="15" id="summaryStats">0 rows displayed</td>
-                </tr>
-            </tfoot>
         </table>
-        <div class="add-row-strip" onclick="openAddRowDrawer()">+ Click to Add Row</div>
     </div>
 
-    <!-- Footer with Controls at Bottom Right -->
+    <!-- Footer with Floating Controls at Bottom Right -->
     <footer class="app-footer">
         <div id="footerCount">Showing 0 of 0 items</div>
 
@@ -915,7 +880,7 @@
             document.getElementById('btnDensityNormal').classList.toggle('active', mode === 'normal');
         }
 
-        // Initialize Preferences
+        // Initialize user preferences
         const savedTheme = localStorage.getItem('user_theme_pref') || 'dark';
         const savedDensity = localStorage.getItem('user_density_pref') || 'normal';
         setTheme(savedTheme);
@@ -1439,7 +1404,6 @@
 
         function updateCounters(displayed) {
             document.getElementById('footerCount').innerText = `Showing ${displayed} of ${rawData.length} items`;
-            document.getElementById('summaryStats').innerText = `${displayed} rows displayed`;
 
             const bulkBtn = document.getElementById('bulkDeleteBtn');
             if (isLoggedIn && selectedRows.size > 0) {
