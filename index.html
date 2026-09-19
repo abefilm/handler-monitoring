@@ -287,6 +287,7 @@
             color: var(--text-secondary);
         }
 
+        /* Modal Overlays */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -433,6 +434,24 @@
             justify-content: flex-end;
             gap: 10px;
             background: #f8fafc;
+        }
+
+        /* Lightbox Image Preview Modal */
+        .lightbox-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 4000;
+            padding: 20px;
+        }
+        .lightbox-modal img {
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
 
         #toast {
@@ -648,13 +667,18 @@
         </div>
     </div>
 
+    <!-- Lightbox Modal -->
+    <div class="lightbox-modal" id="lightboxModal" onclick="this.style.display='none'">
+        <img id="lightboxImg" src="" alt="Preview">
+    </div>
+
     <div id="toast"></div>
 
     <script>
         const ADMIN_USER = "admin";
         const ADMIN_PASS = "admin123";
 
-        // Power Automate Endpoints
+        // Flow URLs
         const readUrl = "https://defaulteaa689b48f8740e09c6f7228de4d75.4a.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/33cda42ea60b487ea12bc6d6b2fb094d/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=-W97iRQOOSQ0lRc9j2WefBnqQegAXIPRvQHX1I2bNOU";
         const writeUrl = "https://defaulteaa689b48f8740e09c6f7228de4d75.4a.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/60eeb9c1879249f79dea375e12bfb527/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=aFIZCX9EK8H4QTmltyJtonb_mLDhEi27kQHK_EoglAw";
         const deleteUrl = "https://defaulteaa689b48f8740e09c6f7228de4d75.4a.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/b4e3ca791183425e99995266ab810738/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Vy2Jtiuem6SIKGtMW2bSujFxI-9HbF18hq2rQ8v8KoU";
@@ -712,10 +736,8 @@
             e.preventDefault();
             const x = e.pageX - slider.offsetLeft;
             const y = e.pageY - slider.offsetTop;
-            const walkX = (x - startX) * 1.5;
-            const walkY = (y - startY) * 1.5;
-            slider.scrollLeft = scrollLeft - walkX;
-            slider.scrollTop = scrollTop - walkY;
+            slider.scrollLeft = scrollLeft - (x - startX) * 1.5;
+            slider.scrollTop = scrollTop - (y - startY) * 1.5;
         });
 
         function checkAuthUI() {
@@ -904,9 +926,9 @@
         }
 
         /* ---------------------------------------------------- */
-        /* IMAGE COMPRESSION UTILITY (PREVENTS TIMEOUTS)       */
+        /* IMAGE COMPRESSION: KEEPS PAYLOAD TINY                */
         /* ---------------------------------------------------- */
-        function compressImage(file, maxWidth = 1000, quality = 0.7) {
+        function compressImage(file, maxWidth = 600, quality = 0.6) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
@@ -997,7 +1019,6 @@
             document.getElementById('form-pending').value = getVal(row, 'PENDING ACTION');
             document.getElementById('form-status').value = getVal(row, 'STATUS') || "Active";
 
-            // Existing Device Photo
             const existingDev = getVal(row, 'DEVICE');
             if (existingDev && (existingDev.startsWith('data:image') || existingDev.startsWith('http'))) {
                 uploadedDeviceBase64 = existingDev;
@@ -1009,7 +1030,6 @@
                 document.getElementById('deviceFileName').innerText = "No device photo chosen";
             }
 
-            // Existing Details Photo
             const existingImg = getVal(row, 'DETAILS');
             if (existingImg && (existingImg.startsWith('data:image') || existingImg.startsWith('http'))) {
                 uploadedPhotoBase64 = existingImg;
@@ -1034,7 +1054,7 @@
             if (input.files && input.files[0]) {
                 const file = input.files[0];
                 document.getElementById('deviceFileName').innerText = file.name + " (Compressing...)";
-                uploadedDeviceBase64 = await compressImage(file, 800, 0.7);
+                uploadedDeviceBase64 = await compressImage(file, 600, 0.6);
                 document.getElementById('deviceThumb').innerHTML = `<img src="${uploadedDeviceBase64}" alt="Device">`;
                 document.getElementById('deviceFileName').innerText = file.name + " (Ready)";
             }
@@ -1044,7 +1064,7 @@
             if (input.files && input.files[0]) {
                 const file = input.files[0];
                 document.getElementById('photoFileName').innerText = file.name + " (Compressing...)";
-                uploadedPhotoBase64 = await compressImage(file, 800, 0.7);
+                uploadedPhotoBase64 = await compressImage(file, 600, 0.6);
                 document.getElementById('photoThumb').innerHTML = `<img src="${uploadedPhotoBase64}" alt="Thumb">`;
                 document.getElementById('photoFileName').innerText = file.name + " (Ready)";
             }
@@ -1078,7 +1098,7 @@
                 "STATUS": document.getElementById('form-status').value
             };
 
-            showToast("Syncing with Excel Online...");
+            showToast("Writing record to Excel...");
 
             try {
                 const response = await fetch(writeUrl, {
@@ -1097,7 +1117,7 @@
                 }
             } catch (err) {
                 console.error(err);
-                alert("Network error: Could not reach Write Flow. Make sure the Excel file is not locked or open in edit mode.");
+                alert("Network error: Could not reach Write Flow. Make sure Excel is not locked.");
             } finally {
                 btnSave.innerText = editId ? "Update Record" : "Save Record";
                 btnSave.disabled = false;
@@ -1204,8 +1224,10 @@
         }
 
         function previewImage(url) {
-            const win = window.open();
-            win.document.write(`<img src="${url}" style="max-width:100%; height:auto;">`);
+            const modal = document.getElementById('lightboxModal');
+            const img = document.getElementById('lightboxImg');
+            img.src = url;
+            modal.style.display = 'flex';
         }
 
         function updateCounters(displayed) {
