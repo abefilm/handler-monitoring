@@ -9,49 +9,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            /* Glassmorphism System Colors */
-            --glass-bg: rgba(255, 255, 255, 0.65);
-            --glass-bg-hover: rgba(255, 255, 255, 0.82);
-            --glass-bg-card: rgba(255, 255, 255, 0.58);
-            --glass-border: rgba(255, 255, 255, 0.75);
-            --glass-border-subtle: rgba(226, 232, 240, 0.65);
-            --glass-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06), 0 4px 6px -2px rgba(15, 23, 42, 0.02);
-            --glass-blur: blur(18px);
-
-            /* Brand Accent Colors */
-            --primary: #059669;
-            --primary-light: #10b981;
-            --primary-glow: rgba(16, 185, 129, 0.25);
-            --danger: #ef4444;
-            --text-main: #0f172a;
-            --text-secondary: #475569;
-            --text-muted: #94a3b8;
-        }
-
-        /* Density variants */
-        body.density-compact {
-            --cell-py: 8px;
-            --cell-px: 14px;
-            --font-size: 12.5px;
-            --thumb-size: 28px;
-            --row-height: 38px;
-        }
-        body.density-normal {
-            --cell-py: 13px;
-            --cell-px: 16px;
-            --font-size: 13.5px;
-            --thumb-size: 34px;
-            --row-height: 48px;
-        }
-
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
 
-        /* Dynamic Light Gradient Ambient Mesh */
+        /* DEEP COFFEE BLACK BACKGROUND */
         body {
-            background: linear-gradient(135deg, #f0fdf4 0%, #f8fafc 35%, #eff6ff 70%, #fdf2f8 100%);
-            background-attachment: fixed;
-            color: var(--text-main);
+            background-color: #120e0d !important;
+            color: #f8fafc !important;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -59,48 +22,94 @@
             position: relative;
         }
 
-        /* Ambient Glow Spheres */
-        body::before, body::after {
-            content: "";
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: -1;
-            pointer-events: none;
+        /* Density heights */
+        body.density-compact {
+            --cell-py: 8px;
+            --cell-px: 14px;
+            --font-size: 12.5px;
+            --thumb-size: 28px;
         }
-        body::before {
-            width: 450px;
-            height: 450px;
-            background: rgba(16, 185, 129, 0.14);
-            top: -100px;
-            right: 15%;
-        }
-        body::after {
-            width: 500px;
-            height: 500px;
-            background: rgba(59, 130, 246, 0.1);
-            bottom: -150px;
-            left: 10%;
+        body.density-normal {
+            --cell-py: 13px;
+            --cell-px: 16px;
+            --font-size: 13.5px;
+            --thumb-size: 34px;
         }
 
-        /* Glass App Header */
+        /* ---------------------------------------------------- */
+        /* GLOWING AMBIENT BACKGROUND ORBS                      */
+        /* ---------------------------------------------------- */
+        .ambient-shape {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(50px);
+            animation: float 20s ease-in-out infinite alternate;
+        }
+        .shape-1 {
+            width: 450px;
+            height: 450px;
+            top: -80px;
+            left: 15%;
+            background: radial-gradient(circle, #f97316 0%, #ec4899 65%, transparent 100%);
+            opacity: 0.75;
+        }
+        .shape-2 {
+            width: 380px;
+            height: 380px;
+            bottom: -60px;
+            right: 12%;
+            background: radial-gradient(circle, #f59e0b 0%, #d97706 70%, transparent 100%);
+            opacity: 0.75;
+            animation-duration: 25s;
+        }
+        .shape-3 {
+            width: 320px;
+            height: 320px;
+            top: 30%;
+            right: 2%;
+            background: radial-gradient(circle, #ec4899 0%, #8b5cf6 70%, transparent 100%);
+            opacity: 0.7;
+            animation-duration: 18s;
+        }
+        .shape-4 {
+            width: 280px;
+            height: 280px;
+            bottom: 20%;
+            left: 3%;
+            background: radial-gradient(circle, #06b6d4 0%, #3b82f6 70%, transparent 100%);
+            opacity: 0.6;
+            animation-duration: 22s;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-30px) scale(1.08); }
+            100% { transform: translateY(20px) scale(0.95); }
+        }
+
+        /* ---------------------------------------------------- */
+        /* GLASSMORPHISM APPLIED TO ALL MAIN CONTAINERS         */
+        /* ---------------------------------------------------- */
         .app-header {
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border-bottom: 1px solid var(--glass-border);
+            position: relative;
+            z-index: 10;
+            background: rgba(30, 23, 21, 0.65) !important;
+            backdrop-filter: blur(25px) !important;
+            -webkit-backdrop-filter: blur(25px) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
             padding: 12px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-            z-index: 20;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
 
         .header-left { display: flex; align-items: center; gap: 14px; }
         .sheet-icon {
-            background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+            background: linear-gradient(135deg, #f97316 0%, #ec4899 100%) !important;
             color: #fff;
             width: 36px;
             height: 38px;
@@ -110,28 +119,28 @@
             justify-content: center;
             font-weight: 800;
             font-size: 16px;
-            box-shadow: 0 4px 12px var(--primary-glow);
+            box-shadow: 0 6px 16px rgba(236, 72, 153, 0.4);
         }
-        .title-group h1 { font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; letter-spacing: -0.3px; }
+        .title-group h1 { font-size: 16px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px; }
         .badge-live {
-            background: rgba(16, 185, 129, 0.15);
-            color: #065f46;
-            border: 1px solid rgba(16, 185, 129, 0.25);
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.4);
             font-size: 11px;
             padding: 2px 8px;
             border-radius: 999px;
             font-weight: 600;
         }
-        .title-meta { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+        .title-meta { font-size: 12px; color: #94a3b8; margin-top: 2px; }
         .header-actions { display: flex; align-items: center; gap: 8px; }
 
-        /* Glass Buttons */
+        /* Frosted Glass Buttons */
         .btn-ui {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.08) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.16) !important;
+            color: #f8fafc !important;
             padding: 7px 14px;
             border-radius: 8px;
             font-size: 12.5px;
@@ -141,92 +150,96 @@
             align-items: center;
             gap: 6px;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
         }
         .btn-ui:hover {
-            background: var(--glass-bg-hover);
+            background: rgba(255, 255, 255, 0.18) !important;
+            border-color: rgba(255, 255, 255, 0.35) !important;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border-color: rgba(255, 255, 255, 0.95);
         }
         .btn-primary {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 4px 12px var(--primary-glow);
+            background: linear-gradient(135deg, #f97316 0%, #ec4899 100%) !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(255, 255, 255, 0.25) !important;
+            box-shadow: 0 4px 14px rgba(236, 72, 153, 0.4);
         }
         .btn-primary:hover {
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
-            box-shadow: 0 6px 16px var(--primary-glow);
+            background: linear-gradient(135deg, #ea580c 0%, #db2777 100%) !important;
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
         }
         .btn-danger {
-            background: rgba(239, 68, 68, 0.1);
-            color: #b91c1c;
-            border-color: rgba(239, 68, 68, 0.25);
-        }
-        .btn-danger:hover {
-            background: rgba(239, 68, 68, 0.18);
+            background: rgba(239, 68, 68, 0.2) !important;
+            color: #fca5a5 !important;
+            border-color: rgba(239, 68, 68, 0.35) !important;
         }
 
-        /* Glass Stats Ribbon */
+        /* Frosted Glass Stats Cards */
         .stats-ribbon {
-            padding: 10px 24px 0 24px;
+            position: relative;
+            z-index: 5;
+            padding: 14px 24px 0 24px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 12px;
+            gap: 14px;
         }
         .stat-glass-card {
-            background: var(--glass-bg-card);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 10px 16px;
-            box-shadow: var(--glass-shadow);
+            background: rgba(34, 25, 23, 0.6) !important;
+            backdrop-filter: blur(25px) !important;
+            -webkit-backdrop-filter: blur(25px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.14) !important;
+            border-radius: 14px;
+            padding: 12px 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             display: flex;
             flex-direction: column;
             gap: 2px;
+            transition: all 0.2s;
         }
-        .stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); }
-        .stat-val { font-size: 20px; font-weight: 800; color: var(--text-main); }
+        .stat-glass-card:hover {
+            background: rgba(48, 36, 33, 0.75) !important;
+            border-color: rgba(255, 255, 255, 0.28) !important;
+            transform: translateY(-2px);
+        }
+        .stat-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; }
+        .stat-val { font-size: 22px; font-weight: 800; color: #fff; }
 
-        /* Glass Toolbar */
+        /* Toolbar */
         .sub-bar {
+            position: relative;
+            z-index: 5;
             padding: 12px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 16px;
         }
-
         .search-box { position: relative; max-width: 420px; width: 100%; }
         .search-box input {
             width: 100%;
             padding: 8px 14px 8px 36px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
             border-radius: 10px;
             font-size: 13px;
             outline: none;
-            color: var(--text-main);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            color: #fff;
             transition: all 0.2s;
         }
         .search-box input:focus {
-            background: #ffffff;
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px var(--primary-glow);
+            background: rgba(255, 255, 255, 0.14);
+            border-color: #ec4899;
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.25);
         }
-        .search-box svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); stroke: var(--text-muted); }
+        .search-box input::placeholder { color: #64748b; }
+        .search-box svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); stroke: #94a3b8; }
 
         .density-selector {
             display: flex;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
             border-radius: 8px;
             overflow: hidden;
             padding: 2px;
@@ -237,29 +250,32 @@
             padding: 5px 12px;
             font-size: 11.5px;
             cursor: pointer;
-            color: var(--text-secondary);
+            color: #94a3b8;
             font-weight: 600;
             border-radius: 6px;
             transition: all 0.15s;
         }
         .density-btn.active {
-            background: #ffffff;
-            color: var(--text-main);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
-        /* Glass Table Canvas */
+        /* ---------------------------------------------------- */
+        /* FROSTED GLASS DATA TABLE CANVAS                      */
+        /* ---------------------------------------------------- */
         .table-wrap {
+            position: relative;
+            z-index: 5;
             flex: 1;
             margin: 0 24px 12px 24px;
             border-radius: 16px;
-            background: var(--glass-bg-card);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
+            background: rgba(30, 23, 21, 0.6) !important;
+            backdrop-filter: blur(28px) !important;
+            -webkit-backdrop-filter: blur(28px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.14) !important;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
             overflow: auto;
-            position: relative;
             cursor: grab;
             user-select: none;
             -webkit-user-select: none;
@@ -275,44 +291,44 @@
             border-collapse: separate;
             border-spacing: 0;
             font-size: var(--font-size);
+            color: #f8fafc;
         }
 
         th, td {
             padding: var(--cell-py) var(--cell-px);
-            border-right: 1px solid var(--glass-border-subtle);
-            border-bottom: 1px solid var(--glass-border-subtle);
+            border-right: 1px solid rgba(255, 255, 255, 0.07);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
             white-space: nowrap;
-            height: var(--row-height);
             vertical-align: middle;
         }
 
         th {
-            background: rgba(248, 250, 252, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            color: var(--text-secondary);
+            background: rgba(26, 19, 17, 0.88) !important;
+            backdrop-filter: blur(25px) !important;
+            -webkit-backdrop-filter: blur(25px) !important;
+            color: #94a3b8;
             font-weight: 700;
             font-size: 11.5px;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.4px;
             position: sticky;
             top: 0;
             z-index: 5;
             user-select: none;
-            border-bottom: 1px solid rgba(203, 213, 225, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.16) !important;
         }
 
         .th-content { display: flex; align-items: center; gap: 6px; }
-        .type-icon { color: #94a3b8; font-size: 11px; font-weight: 700; }
+        .type-icon { color: #64748b; font-size: 11px; font-weight: 700; }
 
         .col-check { width: 42px; text-align: center; }
-        .col-num { width: 48px; text-align: center; color: var(--text-muted); font-size: 11.5px; }
+        .col-num { width: 48px; text-align: center; color: #94a3b8; font-size: 11.5px; }
         .col-actions { width: 140px; text-align: center; }
 
         body.is-readonly .col-check,
         body.is-readonly .col-actions { display: none !important; }
 
-        tr:hover td { background-color: rgba(255, 255, 255, 0.65); }
-        tr.selected td { background-color: rgba(209, 250, 229, 0.55); }
+        tr:hover td { background-color: rgba(255, 255, 255, 0.06); }
+        tr.selected td { background-color: rgba(249, 115, 22, 0.18); }
 
         .badge {
             font-size: 11.5px;
@@ -321,26 +337,26 @@
             font-weight: 600;
             display: inline-block;
         }
-        .status-Active { background: rgba(254, 226, 226, 0.8); color: #b91c1c; border: 1px solid rgba(239, 68, 68, 0.2); }
-        .status-Pending { background: rgba(254, 243, 199, 0.8); color: #b45309; border: 1px solid rgba(245, 158, 11, 0.2); }
-        .status-Resolved { background: rgba(220, 252, 231, 0.8); color: #15803d; border: 1px solid rgba(16, 185, 129, 0.25); }
+        .status-Active { background: rgba(239, 68, 68, 0.25); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
+        .status-Pending { background: rgba(245, 158, 11, 0.25); color: #fde047; border: 1px solid rgba(245, 158, 11, 0.4); }
+        .status-Resolved { background: rgba(16, 185, 129, 0.25); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.4); }
 
         .cell-img-thumb {
             width: var(--thumb-size);
             height: var(--thumb-size);
             object-fit: cover;
             border-radius: 8px;
-            border: 1px solid var(--glass-border);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             cursor: pointer;
             vertical-align: middle;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
-        .cell-img-thumb:hover { transform: scale(1.18); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .cell-img-thumb:hover { transform: scale(1.22); box-shadow: 0 6px 16px rgba(0,0,0,0.6); }
 
         .row-btn {
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.16);
             padding: 4px 10px;
             border-radius: 6px;
             font-size: 11.5px;
@@ -349,88 +365,91 @@
             margin: 0 2px;
             transition: all 0.15s;
         }
-        .row-btn-edit { color: #2563eb; background: rgba(239, 246, 255, 0.8); }
-        .row-btn-edit:hover { background: #dbeafe; }
-        .row-btn-delete { color: #dc2626; background: rgba(254, 242, 242, 0.8); }
-        .row-btn-delete:hover { background: #fee2e2; }
+        .row-btn-edit { color: #60a5fa; background: rgba(59, 130, 246, 0.18); border-color: rgba(59, 130, 246, 0.35); }
+        .row-btn-edit:hover { background: rgba(59, 130, 246, 0.32); color: #fff; }
+        .row-btn-delete { color: #f87171; background: rgba(239, 68, 68, 0.18); border-color: rgba(239, 68, 68, 0.35); }
+        .row-btn-delete:hover { background: rgba(239, 68, 68, 0.32); color: #fff; }
 
         .add-row-strip {
             padding: 12px 24px;
-            color: #059669;
+            color: #34d399;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            border-bottom: 1px solid var(--glass-border-subtle);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             align-items: center;
             gap: 6px;
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.03);
             transition: background 0.15s;
         }
-        .add-row-strip:hover { background: rgba(209, 250, 229, 0.5); }
+        .add-row-strip:hover { background: rgba(16, 185, 129, 0.14); }
 
         tr.summary-row td {
-            background: rgba(248, 250, 252, 0.8);
+            background: rgba(22, 17, 15, 0.9);
             font-weight: 700;
             font-size: 12px;
-            color: var(--text-secondary);
+            color: #cbd5e1;
         }
 
-        /* Glass Footer */
+        /* Footer */
         .app-footer {
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border-top: 1px solid var(--glass-border);
+            position: relative;
+            z-index: 5;
+            background: rgba(30, 23, 21, 0.65);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
             padding: 8px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 11.5px;
-            color: var(--text-secondary);
+            color: #94a3b8;
         }
 
-        /* Glass Login Modal */
+        /* Modal Overlay & Card */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 23, 42, 0.35);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            background: rgba(10, 8, 7, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
         }
         .modal-card {
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-border);
+            background: rgba(36, 27, 24, 0.9) !important;
+            backdrop-filter: blur(30px) !important;
+            -webkit-backdrop-filter: blur(30px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.16) !important;
             border-radius: 16px;
             width: 350px;
             padding: 26px;
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
         }
         .modal-card input {
             width: 100%;
             padding: 9px 12px;
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            color: #fff;
             border-radius: 8px;
             font-size: 13px;
             margin-bottom: 12px;
             outline: none;
         }
-        .modal-card input:focus { border-color: #10b981; }
+        .modal-card input:focus { border-color: #ec4899; }
 
-        /* Glass Slide-over Drawer */
+        /* Slide-over Drawer */
         .drawer-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 23, 42, 0.3);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            background: rgba(10, 8, 7, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             z-index: 2000;
             display: none;
             opacity: 0;
@@ -445,11 +464,11 @@
             width: 580px;
             max-width: 95vw;
             height: 100vh;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-left: 1px solid var(--glass-border);
-            box-shadow: -10px 0 35px rgba(0, 0, 0, 0.08);
+            background: rgba(26, 19, 17, 0.95) !important;
+            backdrop-filter: blur(35px) !important;
+            -webkit-backdrop-filter: blur(35px) !important;
+            border-left: 1px solid rgba(255, 255, 255, 0.16);
+            box-shadow: -15px 0 45px rgba(0, 0, 0, 0.6);
             z-index: 2001;
             display: flex;
             flex-direction: column;
@@ -459,48 +478,50 @@
 
         .drawer-header {
             padding: 20px 24px;
-            border-bottom: 1px solid var(--glass-border-subtle);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-        .drawer-header h2 { font-size: 16px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
+        .drawer-header h2 { font-size: 16px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px; }
         .drawer-close {
             background: none;
             border: none;
             font-size: 20px;
-            color: var(--text-muted);
+            color: #94a3b8;
             cursor: pointer;
             padding: 4px;
             border-radius: 6px;
         }
-        .drawer-close:hover { color: var(--text-main); background: rgba(0,0,0,0.05); }
+        .drawer-close:hover { color: #fff; background: rgba(255,255,255,0.1); }
 
         .drawer-body { flex: 1; overflow-y: auto; padding: 24px; }
-
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .form-group { display: flex; flex-direction: column; gap: 6px; }
         .form-group.col-span-2 { grid-column: span 2; }
-        .form-group label { font-size: 12px; font-weight: 700; color: var(--text-secondary); }
+        .form-group label { font-size: 12px; font-weight: 700; color: #cbd5e1; }
         .form-control {
             padding: 9px 12px;
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: #fff;
             border-radius: 8px;
             font-size: 13px;
             outline: none;
             transition: all 0.2s;
         }
         .form-control:focus {
-            border-color: #10b981;
-            box-shadow: 0 0 0 3px var(--primary-glow);
+            background: rgba(255, 255, 255, 0.14);
+            border-color: #ec4899;
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.25);
         }
+        .form-control option { background: #1a1311; color: #fff; }
 
         .photo-picker-wrap { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
         .photo-thumb-box {
             width: 50px;
             height: 50px;
-            border: 2px dashed #cbd5e1;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -508,26 +529,26 @@
             color: #94a3b8;
             font-size: 20px;
             overflow: hidden;
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.04);
             flex-shrink: 0;
         }
         .photo-thumb-box img { width: 100%; height: 100%; object-fit: cover; }
 
         .drawer-footer {
             padding: 16px 24px;
-            border-top: 1px solid var(--glass-border-subtle);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             justify-content: flex-end;
             gap: 10px;
-            background: rgba(248, 250, 252, 0.7);
+            background: rgba(20, 15, 13, 0.7);
         }
 
-        /* Lightbox Image Preview Modal */
+        /* Lightbox Preview */
         .lightbox-modal {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(8px);
+            background: rgba(10, 8, 7, 0.9);
+            backdrop-filter: blur(12px);
             display: none;
             align-items: center;
             justify-content: center;
@@ -537,9 +558,9 @@
         .lightbox-modal img {
             max-width: 90vw;
             max-height: 85vh;
-            border-radius: 12px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 14px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+            border: 1px solid rgba(255, 255, 255, 0.16);
         }
 
         #toast {
@@ -547,22 +568,28 @@
             bottom: 30px;
             right: 30px;
             padding: 10px 20px;
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(10px);
+            background: rgba(36, 27, 24, 0.95);
+            backdrop-filter: blur(16px);
             color: #fff;
             border-radius: 8px;
             font-size: 12.5px;
             font-weight: 500;
             display: none;
             z-index: 3000;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255, 255, 255, 0.16);
         }
     </style>
 </head>
 <body class="density-normal is-readonly">
 
-    <!-- Header with Glassmorphism -->
+    <!-- Glowing Background Ambient Orbs -->
+    <div class="ambient-shape shape-1"></div>
+    <div class="ambient-shape shape-2"></div>
+    <div class="ambient-shape shape-3"></div>
+    <div class="ambient-shape shape-4"></div>
+
+    <!-- Header -->
     <header class="app-header">
         <div class="header-left">
             <div class="sheet-icon">田</div>
@@ -572,7 +599,6 @@
             </div>
         </div>
         <div class="header-actions">
-            <!-- Role badge completely removed as requested -->
             <button id="authBtn" class="btn-ui" onclick="toggleAuthModal()">Login to Edit</button>
             <button class="btn-ui btn-danger" id="bulkDeleteBtn" style="display:none;" onclick="deleteSelectedRows()">Delete Selected</button>
             <button class="btn-ui" onclick="exportCSV()">⬇ Export CSV</button>
@@ -581,7 +607,7 @@
         </div>
     </header>
 
-    <!-- Glass Stats Ribbon -->
+    <!-- Stats Ribbon -->
     <div class="stats-ribbon">
         <div class="stat-glass-card">
             <span class="stat-label">Total Events</span>
@@ -589,15 +615,15 @@
         </div>
         <div class="stat-glass-card">
             <span class="stat-label">Active</span>
-            <span class="stat-val" id="statActive" style="color:#b91c1c;">0</span>
+            <span class="stat-val" id="statActive" style="color:#fca5a5;">0</span>
         </div>
         <div class="stat-glass-card">
             <span class="stat-label">Pending Review</span>
-            <span class="stat-val" id="statPending" style="color:#b45309;">0</span>
+            <span class="stat-val" id="statPending" style="color:#fde047;">0</span>
         </div>
         <div class="stat-glass-card">
             <span class="stat-label">Resolved</span>
-            <span class="stat-val" id="statResolved" style="color:#15803d;">0</span>
+            <span class="stat-val" id="statResolved" style="color:#6ee7b7;">0</span>
         </div>
     </div>
 
@@ -614,7 +640,7 @@
         </div>
     </div>
 
-    <!-- Glass Table Canvas with Pan-to-Scroll -->
+    <!-- Glass Table Canvas with Drag-to-Scroll -->
     <div class="table-wrap" id="tableWrap">
         <table class="sheet-table">
             <thead>
@@ -639,7 +665,7 @@
                 </tr>
             </thead>
             <tbody id="dataTableBody">
-                <tr><td colspan="17" style="text-align:center; padding: 40px; color: var(--text-muted);">Loading live data...</td></tr>
+                <tr><td colspan="17" style="text-align:center; padding: 40px; color: #94a3b8;">Loading live data...</td></tr>
             </tbody>
             <tfoot>
                 <tr class="summary-row">
@@ -658,11 +684,11 @@
         <div>Drag table to pan left/right • Click image thumbnails to zoom.</div>
     </footer>
 
-    <!-- Glass Login Modal -->
+    <!-- Login Modal -->
     <div class="modal-overlay" id="loginModal">
         <div class="modal-card">
-            <h3 style="margin-bottom: 6px; font-size: 16px; font-weight: 800;">Login to Edit</h3>
-            <p style="font-size:12px; color:var(--text-secondary); margin-bottom:16px;">Sign in with credentials to modify records.</p>
+            <h3 style="margin-bottom: 6px; font-size: 16px; font-weight: 800; color: #fff;">Login to Edit</h3>
+            <p style="font-size:12px; color:#94a3b8; margin-bottom:16px;">Sign in with credentials to modify records.</p>
             <form onsubmit="handleLogin(event)">
                 <input type="text" id="loginUsername" placeholder="Username (Default: admin)" required>
                 <input type="password" id="loginPassword" placeholder="Password (Default: admin123)" required>
@@ -674,11 +700,11 @@
         </div>
     </div>
 
-    <!-- Glass Slide-over Drawer (Add / Edit Record) -->
+    <!-- Slide-over Drawer (Add / Edit Record) -->
     <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
     <div class="drawer-panel" id="drawerPanel">
         <div class="drawer-header">
-            <h2 id="drawerTitle"><span style="color: #10b981;">+</span> Add New Row / Record</h2>
+            <h2 id="drawerTitle"><span style="color: #f97316;">+</span> Add New Row / Record</h2>
             <button class="drawer-close" onclick="closeDrawer()">✕</button>
         </div>
         <div class="drawer-body">
@@ -710,7 +736,7 @@
                             <div class="photo-thumb-box" id="deviceThumb">📷</div>
                             <input type="file" id="form-device-file" accept="image/*" style="display:none;" onchange="handleDevicePhotoPick(this)">
                             <button type="button" class="btn-ui" onclick="document.getElementById('form-device-file').click()">Upload Device Photo</button>
-                            <span id="deviceFileName" style="font-size:12px; color:var(--text-muted);">No device photo chosen</span>
+                            <span id="deviceFileName" style="font-size:12px; color:#94a3b8;">No device photo chosen</span>
                         </div>
                     </div>
 
@@ -765,7 +791,7 @@
                             <div class="photo-thumb-box" id="photoThumb">📷</div>
                             <input type="file" id="form-file" accept="image/*" style="display:none;" onchange="handlePhotoPick(this)">
                             <button type="button" class="btn-ui" onclick="document.getElementById('form-file').click()">Upload / Select Photo</button>
-                            <span id="photoFileName" style="font-size:12px; color:var(--text-muted);">No photo chosen</span>
+                            <span id="photoFileName" style="font-size:12px; color:#94a3b8;">No photo chosen</span>
                         </div>
                     </div>
                 </div>
@@ -1014,7 +1040,7 @@
                     const isImg = val.startsWith('data:image') || val.startsWith('http');
 
                     if (col.type === 'image') {
-                        html += `<td>${isImg ? `<img src="${val}" class="cell-img-thumb" onclick="previewImage('${val}')" alt="${col.label}">` : `<span style="color:#cbd5e1">-</span>`}</td>`;
+                        html += `<td>${isImg ? `<img src="${val}" class="cell-img-thumb" onclick="previewImage('${val}')" alt="${col.label}">` : `<span style="color:#64748b">-</span>`}</td>`;
                     } else if (col.type === 'badge') {
                         const st = val || 'Active';
                         html += `<td><span class="badge status-${st}">${st}</span></td>`;
@@ -1069,7 +1095,7 @@
                 return;
             }
 
-            document.getElementById('drawerTitle').innerHTML = `<span style="color: #10b981;">+</span> Add New Row / Record`;
+            document.getElementById('drawerTitle').innerHTML = `<span style="color: #f97316;">+</span> Add New Row / Record`;
             document.getElementById('btnSaveRecord').innerText = "Save Record";
             document.getElementById('form-edit-id').value = "";
 
@@ -1180,7 +1206,7 @@
             e.preventDefault();
 
             const btnSave = document.getElementById('btnSaveRecord');
-            btnSave.innerText = "Saving to database...";
+            btnSave.innerText = "Saving to Excel...";
             btnSave.disabled = true;
 
             const editId = document.getElementById('form-edit-id').value;
@@ -1204,7 +1230,7 @@
                 "STATUS": document.getElementById('form-status').value
             };
 
-            showToast("Syncing with database...");
+            showToast("Syncing with Excel Online...");
 
             try {
                 const response = await fetch(writeUrl, {
@@ -1223,7 +1249,7 @@
                 }
             } catch (err) {
                 console.error(err);
-                alert("Network error: Could not reach Write Flow.");
+                alert("Network error: Could not reach Write Flow. Make sure Excel is not locked.");
             } finally {
                 btnSave.innerText = editId ? "Update Record" : "Save Record";
                 btnSave.disabled = false;
@@ -1241,14 +1267,14 @@
             const rId = getRowId(row);
             const hndId = getVal(row, 'HANDLER ID');
 
-            if (!confirm(`Permanently delete row for Handler "${hndId || rId}" from database?`)) return;
+            if (!confirm(`Permanently delete row for Handler "${hndId || rId}" from Excel?`)) return;
 
             if (!rId) {
                 alert("Could not find a valid ID for this row.");
                 return;
             }
 
-            showToast(`Deleting row...`);
+            showToast(`Deleting row from Excel...`);
 
             try {
                 const response = await fetch(deleteUrl, {
@@ -1263,7 +1289,8 @@
                     return;
                 }
 
-                showToast("Row deleted successfully!");
+                showToast("Row deleted from Excel successfully!");
+
                 rawData.splice(idx, 1);
                 updateStatsCards();
                 renderTable();
@@ -1282,7 +1309,7 @@
             if (!isLoggedIn || selectedRows.size === 0) return;
 
             const count = selectedRows.size;
-            if (!confirm(`Permanently delete ${count} row(s) directly from database?`)) return;
+            if (!confirm(`Permanently delete ${count} row(s) directly from Excel?`)) return;
 
             const idsToDelete = [];
             selectedRows.forEach(idx => {
